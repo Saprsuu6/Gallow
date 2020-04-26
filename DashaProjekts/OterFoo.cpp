@@ -67,6 +67,7 @@ void MenuEvent(HANDLE& h, Word& word) {
                     word.length = 10;
                 else if (GameSettings() == 3)
                     word.length = 15;
+                //asd
             }
                 
         }
