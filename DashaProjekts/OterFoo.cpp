@@ -1,6 +1,6 @@
 #include "Header.h"
 
-enum Colours { GREEN = 10, DARK_GREEN = 2 };
+enum Colours { GREEN = 10, RED = 4 };
 
 void Setings(HANDLE& h, HWND& hwnd) {
     system("mode con cols=70 lines=25");
@@ -14,15 +14,9 @@ void Setings(HANDLE& h, HWND& hwnd) {
     srand(time(0));
 }
 
-struct Word {
-    int length;
-    char* str = new char[length];
-};
-
 void MenuGreenText(HANDLE& h, int x, int y) {
     COORD text{ x,y };
     SetConsoleCursorPosition(h, text);
-    SetConsoleTextAttribute(h, DARK_GREEN);
     SetConsoleTextAttribute(h, GREEN);
     cout << "Начать игру." << endl;
     cout << "Настройки." << endl;
@@ -34,6 +28,39 @@ void MenuDarkGreenText(HANDLE& h, string str, int x, int y, int color) {
     SetConsoleCursorPosition(h, text);
     SetConsoleTextAttribute(h, color);
     cout << str;
+}
+
+void Complexity(HANDLE& h, Word& word) {
+    SetConsoleTextAttribute(h, GREEN);
+    cout << "1 - Легко, 2 - Нормально, 3 - Сложно\nВыберите сложность и нажмите ENTER: ";
+    int setings = GameSetings();
+    cout << setings;
+    if (setings == 1)
+        word.length = 6;
+    else if (setings == 2)
+        word.length = 8;
+    else if (setings == 3)
+        word.length = 10;
+    else {
+        system("cls");
+        cout << "Попробуйте ещё раз!" << endl;
+        Complexity(h, word);
+    }
+    main();
+}
+
+void Exit() {
+    int message = MessageBoxA(0, "", "Вы точно хотите выйти?", MB_YESNO);
+    if (message == IDYES)
+        system("taskkill /im Gallow.exe");
+    else
+        main();
+}
+
+int GameSetings() {
+    int complexity;
+    cin >> complexity;
+    return complexity;
 }
 
 void MenuEvent(HANDLE& h, Word& word) {
@@ -50,36 +77,24 @@ void MenuEvent(HANDLE& h, Word& word) {
             mouse.Y = all_events[i].Event.MouseEvent.dwMousePosition.Y;
             MenuGreenText(h, 0, 0);
             if (mouse.X >= 0 && mouse.X <= 11 && mouse.Y == 0)
-                MenuDarkGreenText(h, "Начать игру.", 0, 0, DARK_GREEN);
+                MenuDarkGreenText(h, "Начать игру.", 0, 0, RED);
             else if (mouse.X >= 0 && mouse.X <= 9 && mouse.Y == 1)
-                MenuDarkGreenText(h, "Настройки.", 0, 1, DARK_GREEN);
+                MenuDarkGreenText(h, "Настройки.", 0, 1, RED);
             else if (mouse.X >= 0 && mouse.X <= 5 && mouse.Y == 2)
-                MenuDarkGreenText(h, "Выход.", 0, 2, DARK_GREEN);
+                MenuDarkGreenText(h, "Выход.", 0, 2, RED);
             if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED &&
                 mouse.X >= 0 && mouse.X <= 5 && mouse.Y == 2)
-                system("taskkill /im Gallow.exe");
+                Exit();
             else if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED &&
                 mouse.X >= 0 && mouse.X <= 9 && mouse.Y == 1) {
-                cout << "1 - Сложно, 2 - Нормально, 3 - Легко\nВыберите сложность:";
-                if (GameSettings() == 1)
-                    word.length = 5;
-                else if (GameSettings() == 2)
-                    word.length = 10;
-                else if (GameSettings() == 3)
-                    word.length = 15;
-                //asd
+                system("cls");
+                Complexity(h, word);
             }
-                
+            else if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED &&
+                mouse.X >= 0 && mouse.X <= 11 && mouse.Y == 0) {
+                system("cls");
+                Complexity(h, word);
+            }
         }
     }
 }
-
-int GameSettings() {
-    int complexity;
-    cin >> complexity;
-    return complexity;
-}
-
-//void CreateWord(Word& word) {
-//    cin.getline(word.str, word.length - 1);
-//}
