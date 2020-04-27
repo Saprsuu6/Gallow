@@ -17,3 +17,4 @@ int GameSetings();
 int main();
 void Exit();
 void Complexity(HANDLE& h, Word& word);
+void Loading(HANDLE& h, int color);

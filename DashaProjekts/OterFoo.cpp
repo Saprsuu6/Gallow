@@ -63,6 +63,25 @@ int GameSetings() {
     return complexity;
 }
 
+void Loading(HANDLE& h, int color) {
+    COORD c{ 7,0 };
+    SetConsoleTextAttribute(h, color);
+    for (int i = 0; i < 5; i++) {
+        cout << "Loading";
+        for (int i = 0; i < 3; i++) {
+            Sleep(200);
+            SetConsoleCursorPosition(h, c);
+            cout << ".";
+            Sleep(200);
+            c.X++;
+            if (c.X == 10) {
+                system("cls");
+                c.X = 7;
+            }
+        }
+    }
+}
+
 void MenuEvent(HANDLE& h, Word& word) {
     COORD mouse;
     HANDLE h_m = GetStdHandle(STD_INPUT_HANDLE);
@@ -93,7 +112,7 @@ void MenuEvent(HANDLE& h, Word& word) {
             else if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED &&
                 mouse.X >= 0 && mouse.X <= 11 && mouse.Y == 0) {
                 system("cls");
-                Complexity(h, word);
+                Loading(h, GREEN);
             }
         }
     }
