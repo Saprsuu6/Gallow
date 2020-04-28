@@ -8,7 +8,7 @@ int main() {
 	MenuGreenText(h, 0, 0, int(Colors::GREEN));
 	MenuEvent(h, word, false, int(Colors::RED), int(Colors::GREEN));
 	system("cls");
-	Loading(h, int(Colors::GREEN));
+	//Loading(h, int(Colors::GREEN));
 	CreateWord(word);
 	CountLetters(word);
 	system("cls");

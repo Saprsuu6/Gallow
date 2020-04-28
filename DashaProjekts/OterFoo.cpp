@@ -146,7 +146,7 @@ void GameplayPrint(const HANDLE& h, const Word& word, int width) {
 
 void GamePlay(const HANDLE& h, const Word& word, int enter, int color, int color2, int color3) {
     COORD input;
-    char latter;
+    char latter_code;
     int latters_left = word.length;
     int* ar = new int[word.length];
     int ind_of_latter;
@@ -160,29 +160,24 @@ void GamePlay(const HANDLE& h, const Word& word, int enter, int color, int color
         input.Y++;
         SetConsoleCursorPosition(h, input);
         cout << "Now " << ind_of_latter << " latter!";
-        
-        COORD a{ 10,10 };
-        SetConsoleCursorPosition(h, a);
-        /*for (int i = 0; i < word.length; i++)
-            cout << word.str[i];*/
-        cout << word.str[ind_of_latter];
-
         while (true) {
             input.Y = 3;
             input.X = 15;
             SetConsoleCursorPosition(h, input);
             SetConsoleTextAttribute(h, color);
-            int code = _getch();
-            if (code == 224)
-                code = _getch();
-            if(code != 9)
-                cout << char(code);
+            latter_code = Input();
+            if (latter_code != 9) // TAB
+                cout << char(latter_code);
+            //if (latter_code == 13) //ENTER
+            //    break;
             input.Y++;
             input.X -= 14;
             SetConsoleCursorPosition(h, input);
             SetConsoleTextAttribute(h, color2);
             cout << "Press ENTER";
+            break;
         }
+        Check(input, word, latter_code, ind_of_latter);
     }
 }
 
@@ -194,4 +189,19 @@ int RandomLatter(const Word& word, int*& ar) {
     }
     ar[value] = value;
     return value;
+}
+
+int Input() {
+    int code = _getch();
+    if (code == 224)
+        code = _getch();
+    return code;
+}
+
+void Check(COORD& input, const Word& word, int latter_code, int ind_of_latter) {
+    if (latter_code == char(word.str[ind_of_latter - 1])) {
+        input.X = ind_of_latter;
+        input.Y = 1;
+        cout << char(latter_code);
+    }
 }

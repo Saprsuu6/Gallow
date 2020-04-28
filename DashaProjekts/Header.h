@@ -25,3 +25,5 @@ void GameplayPrint(const HANDLE& h, const Word& word, int width);
 void CountLetters(Word& word);
 void GamePlay(const HANDLE& h, const Word& word, int enter, int color, int color2, int color3);
 int RandomLatter(const Word& word, int*& ar);
+int Input();
+void Check(COORD& input, const Word& word, int latter_code, int ind_of_latter);
