@@ -1,10 +1,9 @@
 #include "Header.h"
 
-void Setings(HANDLE& h, HWND& hwnd) {
+void Setings(const HANDLE& h, const HWND& hwnd) {
     system("mode con cols=70 lines=25");
     SetConsoleTextAttribute(h, 10);
     system("title Gallows");
-    setlocale(LC_ALL, "RUS");
     CONSOLE_CURSOR_INFO info;
     info.bVisible = false;
     info.dwSize = 100;
@@ -12,25 +11,25 @@ void Setings(HANDLE& h, HWND& hwnd) {
     srand(time(0));
 }
 
-void MenuGreenText(HANDLE& h, int x, int y) {
+void MenuGreenText(const HANDLE& h, int x, int y) {
     COORD text{ x,y };
     SetConsoleCursorPosition(h, text);
     SetConsoleTextAttribute(h, int(Colors::GREEN));
-    cout << "Начать игру." << endl;
-    cout << "Настройки." << endl;
-    cout << "Выход." << endl;
+    cout << "Start game." << endl;
+    cout << "Setings." << endl;
+    cout << "Exit." << endl;
 }
 
-void MenuDarkGreenText(HANDLE& h, string str, int x, int y, int color) {
+void MenuDarkGreenText(const HANDLE& h, string str, int x, int y, int color) {
     COORD text{ x,y };
     SetConsoleCursorPosition(h, text);
     SetConsoleTextAttribute(h, color);
     cout << str;
 }
 
-void Complexity(HANDLE& h, Word& word) {
+void Complexity(const HANDLE& h, Word& word) {
     SetConsoleTextAttribute(h, int(Colors::GREEN));
-    cout << "1 - Легко, 2 - Нормально, 3 - Сложно\nВыберите сложность и нажмите ENTER: ";
+    cout << "1 - Easy, 2 - Normal, 3 - Hard\nChoose complexity and press ENTER: ";
     int setings = GameSetings();
     cout << setings;
     if (setings == 1)
@@ -41,14 +40,14 @@ void Complexity(HANDLE& h, Word& word) {
         word.length = 11;
     else {
         system("cls");
-        cout << "Попробуйте ещё раз!" << endl;
+        cout << "Try again!" << endl;
         Complexity(h, word);
     }
     main();
 }
 
 void Exit() {
-    int message = MessageBoxA(0, "", "Вы точно хотите выйти?", MB_YESNO);
+    int message = MessageBoxA(0, "", "Do you realy to exit?", MB_YESNO);
     if (message == IDYES)
         system("taskkill /im Gallow.exe");
     else
@@ -61,7 +60,7 @@ int GameSetings() {
     return complexity;
 }
 
-void Loading(HANDLE& h, int color) {
+void Loading(const HANDLE& h, int color) {
     COORD c{ 7,0 };
     SetConsoleTextAttribute(h, color);
     for (int i = 0; i < 3; i++) {
@@ -94,19 +93,19 @@ void MenuEvent(HANDLE& h, Word& word, bool exit) {
             mouse.Y = all_events[i].Event.MouseEvent.dwMousePosition.Y;
             MenuGreenText(h, 0, 0);
             if (mouse.X >= 0 && mouse.X <= 11 && mouse.Y == 0)
-                MenuDarkGreenText(h, "Начать игру.", 0, 0, int(Colors::RED));
+                MenuDarkGreenText(h, "Start game.", 0, 0, int(Colors::RED));
             else if (mouse.X >= 0 && mouse.X <= 9 && mouse.Y == 1)
-                MenuDarkGreenText(h, "Настройки.", 0, 1, int(Colors::RED));
+                MenuDarkGreenText(h, "Setings.", 0, 1, int(Colors::RED));
             else if (mouse.X >= 0 && mouse.X <= 5 && mouse.Y == 2)
-                MenuDarkGreenText(h, "Выход.", 0, 2, int(Colors::RED));
+                MenuDarkGreenText(h, "Exit.", 0, 2, int(Colors::RED));
             if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED &&
                 mouse.X >= 0 && mouse.X <= 5 && mouse.Y == 2)
                 Exit();
-            else if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED &&
-                mouse.X >= 0 && mouse.X <= 9 && mouse.Y == 1) {
-                system("cls");
-                Complexity(h, word);
-            }
+            /*else if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED && // not fix
+                mouse.X >= 0 && mouse.X <= 9 && mouse.Y == 1) {                                        // not fix
+                system("cls");                                                                         // not fix
+                Complexity(h, word);                                                                   // not fix
+            }*/                                                                                        // not fix
             else if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED &&
                 mouse.X >= 0 && mouse.X <= 11 && mouse.Y == 0)
                 exit = true;
@@ -117,7 +116,7 @@ void MenuEvent(HANDLE& h, Word& word, bool exit) {
 }
 
 void CreateWord(Word& word) {
-    cout << "Введите слово или словосочетание из " << word.length - 1 << " букв: ";
+    cout << "Enter word or sentence from " << word.length - 1 << " latters: ";
     cin.getline(word.str, word.length);
     _strcmpi(word.str, "\0");
     CountLetters(word);
@@ -132,7 +131,7 @@ void CountLetters(Word& word) {
     word.length = letters;
 }
 
-void Frame(HANDLE& h, Word& word, int hight, int width) {
+void Frame(const HANDLE& h, const Word& word, int hight, int width) {
     for (int i = 0; i < hight; i++) {
         for (int j = 0; j < width; j++) {
             if (i == 0 && j == 0)
@@ -160,10 +159,10 @@ void Frame(HANDLE& h, Word& word, int hight, int width) {
     }
 }
 
-void GameplayPrint(HANDLE& h, Word& word, int hight, int width) {
+void GameplayPrint(const HANDLE& h, const Word& word, int hight, int width) {
     COORD c{ 1,3 };
     SetConsoleCursorPosition(h, c);
-    cout << "Введите букву: ";
+    cout << "Enter latter:" << char(26) << " " << char(27);
     c.Y+=2;
     for (int i = 0; i < hight; i++) {
         SetConsoleCursorPosition(h, c);
@@ -175,11 +174,25 @@ void GameplayPrint(HANDLE& h, Word& word, int hight, int width) {
     }
 }
 
-void GamePlay(HANDLE& h, Word& word) {
-    COORD input{ 16,3 };
+void GamePlay(const HANDLE& h, const Word& word, int enter, int color, int color2) {
+    COORD input;
     char latter;
     for (int i = 0; i < word.length; i++) {
-        SetConsoleCursorPosition(h, input);
-        
+        while (true) {
+            input.Y = 3;
+            input.X = 15;
+            SetConsoleTextAttribute(h, color);
+            SetConsoleCursorPosition(h, input);
+            int code = _getch();
+            if (code == 224)
+                code = _getch();
+            if(code != 9)
+                cout << char(code);
+            input.Y++;
+            input.X -= 14;
+            SetConsoleTextAttribute(h, color2);
+            SetConsoleCursorPosition(h, input);
+            cout << "Press ENTER";
+        }
     }
 }

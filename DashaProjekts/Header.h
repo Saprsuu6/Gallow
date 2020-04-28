@@ -11,17 +11,17 @@ struct Word {
     char* str = new char[length];
 };
 
-void Setings(HANDLE& h, HWND& hwnd);
-void MenuGreenText(HANDLE& h, int x, int y);
+void Setings(const HANDLE& h, const HWND& hwnd);
+void MenuGreenText(const HANDLE& h, int x, int y);
 void MenuEvent(HANDLE& h, Word& word, bool exit);
-void MenuDarkGreenText(HANDLE& h, string str, int x, int y, int color);
+void MenuDarkGreenText(const HANDLE& h, string str, int x, int y, int color);
 int GameSetings();
 int main();
 void Exit();
-void Complexity(HANDLE& h, Word& word);
-void Loading(HANDLE& h, int color);
+void Complexity(const HANDLE& h, Word& word);
+void Loading(const HANDLE& h, int color);
 void CreateWord(Word& word);
-void Frame(HANDLE& h, Word& word, int hight, int width);
-void GameplayPrint(HANDLE& h, Word& word, int hight, int width);
+void Frame(const HANDLE& h, const Word& word, int hight, int width);
+void GameplayPrint(const HANDLE& h, const Word& word, int hight, int width);
 void CountLetters(Word& word);
-void GamePlay(HANDLE& h, Word& word);
+void GamePlay(const HANDLE& h, const Word& word, int enter, int color, int color2);
