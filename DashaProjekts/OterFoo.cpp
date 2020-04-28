@@ -116,7 +116,7 @@ void MenuEvent(HANDLE& h, Word& word, bool exit) {
 }
 
 void CreateWord(Word& word) {
-    cout << "Enter word or sentence from " << word.length - 1 << " latters: ";
+    cout << "Enter word or sentence from " << word.length - 1 << " latters(ENGLISH): ";
     cin.getline(word.str, word.length);
     _strcmpi(word.str, "\0");
     CountLetters(word);
