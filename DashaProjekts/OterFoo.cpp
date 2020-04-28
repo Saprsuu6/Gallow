@@ -16,7 +16,7 @@ void MenuGreenText(const HANDLE& h, int x, int y) {
     SetConsoleCursorPosition(h, text);
     SetConsoleTextAttribute(h, int(Colors::GREEN));
     cout << "Start game." << endl;
-    cout << "Setings." << endl;
+    //cout << "Setings." << endl;
     cout << "Exit." << endl;
 }
 
@@ -94,18 +94,18 @@ void MenuEvent(HANDLE& h, Word& word, bool exit) {
             MenuGreenText(h, 0, 0);
             if (mouse.X >= 0 && mouse.X <= 11 && mouse.Y == 0)
                 MenuDarkGreenText(h, "Start game.", 0, 0, int(Colors::RED));
-            else if (mouse.X >= 0 && mouse.X <= 9 && mouse.Y == 1)
-                MenuDarkGreenText(h, "Setings.", 0, 1, int(Colors::RED));
+            /*else if (mouse.X >= 0 && mouse.X <= 9 && mouse.Y == 1)
+                MenuDarkGreenText(h, "Setings.", 0, 1, int(Colors::RED));*/
             else if (mouse.X >= 0 && mouse.X <= 5 && mouse.Y == 2)
                 MenuDarkGreenText(h, "Exit.", 0, 2, int(Colors::RED));
             if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED &&
                 mouse.X >= 0 && mouse.X <= 5 && mouse.Y == 2)
                 Exit();
-            /*else if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED && // not fix
-                mouse.X >= 0 && mouse.X <= 9 && mouse.Y == 1) {                                        // not fix
-                system("cls");                                                                         // not fix
-                Complexity(h, word);                                                                   // not fix
-            }*/                                                                                        // not fix
+            /*else if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED && 
+                mouse.X >= 0 && mouse.X <= 9 && mouse.Y == 1) {                                        
+                system("cls");                                                                         
+                Complexity(h, word);                                                                   
+            } */                                                                                       
             else if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED &&
                 mouse.X >= 0 && mouse.X <= 11 && mouse.Y == 0)
                 exit = true;
@@ -118,7 +118,7 @@ void MenuEvent(HANDLE& h, Word& word, bool exit) {
 void CreateWord(Word& word) {
     cout << "Enter word or sentence from " << word.length - 1 << " latters(ENGLISH): ";
     cin.getline(word.str, word.length);
-    _strcmpi(word.str, "\0");
+    //strcat_s(word.str, word.length, "\0");
     CountLetters(word);
 }
 

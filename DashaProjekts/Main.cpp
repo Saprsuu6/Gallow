@@ -4,12 +4,13 @@ int main() {
 	HWND hwnd = GetConsoleWindow();
 	HANDLE h = GetStdHandle(-11);
 	Setings(h, hwnd);
-	Word word{ 17 };
+	Word word{ 1000 };
 	MenuGreenText(h, 0, 0);
 	MenuEvent(h, word, false);
 	system("cls");
 	Loading(h, int(Colors::GREEN));
 	CreateWord(word);
+	CountLetters(word);
 	system("cls");
 	Frame(h, word, 10, 35);
 	GameplayPrint(h, word, 4, 8);
