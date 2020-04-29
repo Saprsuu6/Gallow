@@ -27,7 +27,7 @@ void MenuDarkGreenText(const HANDLE& h, string str, int x, int y, int color) {
 }
 
 void Exit() {
-    int message = MessageBoxA(0, "", "Do you realy to exit?", MB_YESNO);
+    int message = MessageBoxA(0, "Do you realy to exit?", "", MB_YESNO);
     if (message == IDYES)
         system("taskkill /im Gallow.exe");
     else
@@ -146,12 +146,13 @@ void GameplayPrint(const HANDLE& h, const Word& word, int width) {
 
 void GamePlay(const HANDLE& h, const Word& word, int enter, int color, int color2, int color3) {
     COORD input;
-    char latter_code;
+    int code;
+    char latter_code = 0;
     int latters_left = word.length;
     int* ar = new int[word.length];
-    int ind_of_latter;
-    for (int i = 0; i < word.length; i++) {
-        ind_of_latter = RandomLatter(word, ar);
+    int ind_of_latter = RandomLatter(word, ar);
+    while (true) {
+        int exit_from_cycle = 0;
         input.X = 1;
         input.Y = 6;
         SetConsoleCursorPosition(h, input);
@@ -159,37 +160,46 @@ void GamePlay(const HANDLE& h, const Word& word, int enter, int color, int color
         cout << "Latters left: " << latters_left;
         input.Y++;
         SetConsoleCursorPosition(h, input);
-        cout << "Now " << ind_of_latter << " latter!";
+        cout << "Now " << ind_of_latter + 1 << " latter!";
         while (true) {
             input.Y = 3;
             input.X = 15;
             SetConsoleCursorPosition(h, input);
             SetConsoleTextAttribute(h, color);
-            latter_code = Input();
-            if (latter_code != 9) // TAB
+            code = Input();
+            if (code != 13)
+                latter_code = code;
+            else
+                exit_from_cycle = code;
+            if (latter_code != 9) // TAB and ENTER
                 cout << char(latter_code);
-            //if (latter_code == 13) //ENTER
-            //    break;
+            if (exit_from_cycle == 13) //ENTER
+                break;
             input.Y++;
             input.X -= 14;
             SetConsoleCursorPosition(h, input);
             SetConsoleTextAttribute(h, color2);
             cout << "Press ENTER";
-            break;
         }
-        Check(input, word, latter_code, ind_of_latter);
+        Check(h, input, word, latter_code, ind_of_latter, ar, latters_left);
+        CheckForFinish(latters_left);
     }
 }
 
-int RandomLatter(const Word& word, int*& ar) {
-    int value = rand() % (word.length - 1) + 1;
-    for (int i = 0; i < word.length; i++) {
-        if (ar[i] == value)
-            RandomLatter(word, ar);
-    }
-    ar[value] = value;
-    return value;
-}
+
+// почему-то не хочет нормально работать
+int RandomLatter(const Word& word, int*& ar) {  
+    int value = rand() % word.length;           
+    for (int i = 0; i < word.length; i++) {     
+        if (ar[i] == value) {                   
+            while (value == ar[i])              
+                value = rand() % word.length;   
+            i = 0;                              
+        }                                       
+    }                                           
+    ar[value] = value;                          
+    return value;                               
+}                                               
 
 int Input() {
     int code = _getch();
@@ -198,10 +208,53 @@ int Input() {
     return code;
 }
 
-void Check(COORD& input, const Word& word, int latter_code, int ind_of_latter) {
-    if (latter_code == char(word.str[ind_of_latter - 1])) {
-        input.X = ind_of_latter;
+void Check(const HANDLE& h, COORD& input, const Word& word, int latter_code, int& ind_of_latter, int*& ar,
+    int& latters_left) {
+    if (latter_code == char(word.str[ind_of_latter])) {
+        input.X = ind_of_latter + 1;
         input.Y = 1;
+        SetConsoleCursorPosition(h, input);
         cout << char(latter_code);
+        Effect(h, input, int(Colors::LIGHT_RED), int(Colors::GREEN), "RIGHT:)");
+        ind_of_latter = RandomLatter(word, ar);
+        latters_left--;
     }
+    else 
+        Effect(h, input, int(Colors::LIGHT_RED), int(Colors::GREEN), "WRONG:(");
+}
+
+void Effect(const HANDLE& h, COORD& input, int color, int color2, string str) {
+    input.X = 1;
+    input.Y = 5;
+    for (int i = 0; i < 6; i++) {
+        if (i % 2 == 0)
+            SetConsoleTextAttribute(h, color);
+        else
+            SetConsoleTextAttribute(h, color2);
+        SetConsoleCursorPosition(h, input);
+        cout << str;
+        Sleep(200);
+    }
+    Sleep(100);
+    SetConsoleCursorPosition(h, input);
+    cout << "       ";
+}
+
+void CheckForFinish(int latters_left) {
+    if (latters_left == 0) {
+        MusikWin();
+        int message = MessageBoxA(0, "You have guessed all latters. Do you wnat to play again?", "You win!!!", MB_YESNO);
+        if (message == IDYES)
+            main();
+        else
+            system("taskkill /im Gallow.exe");
+    }
+}
+
+void MusikWin() {
+    Beep(494, 500);
+    for (int i = 0; i < 2; i++)
+        Beep(523, 100);
+    Beep(523, 100);
+    Beep(880, 500);
 }

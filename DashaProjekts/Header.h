@@ -4,7 +4,7 @@
 #include<conio.h>
 using namespace std;
 
-enum class Colors { GREEN = 10, RED = 4, PINK = 13 };
+enum class Colors { GREEN = 10, RED = 4, PINK = 13, LIGHT_RED = 12 };
 
 struct Word {
     int length;
@@ -26,4 +26,8 @@ void CountLetters(Word& word);
 void GamePlay(const HANDLE& h, const Word& word, int enter, int color, int color2, int color3);
 int RandomLatter(const Word& word, int*& ar);
 int Input();
-void Check(COORD& input, const Word& word, int latter_code, int ind_of_latter);
+void Check(const HANDLE& h, COORD& input, const Word& word, int latter_code, int& ind_of_latter, int*& ar,
+    int& latters_left);
+void Effect(const HANDLE& h, COORD& input, int color, int color2, string str);
+void CheckForFinish(int latters_left);
+void MusikWin();
