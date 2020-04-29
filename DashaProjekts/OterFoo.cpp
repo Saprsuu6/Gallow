@@ -186,8 +186,6 @@ void GamePlay(const HANDLE& h, const Word& word, int enter, int color, int color
     }
 }
 
-
-// почему-то не хочет нормально работать
 int RandomLatter(const Word& word, int*& ar) {  
     int value = rand() % word.length;           
     for (int i = 0; i < word.length; i++) {     
@@ -257,4 +255,53 @@ void MusikWin() {
         Beep(523, 100);
     Beep(523, 100);
     Beep(880, 500);
+}
+
+void Picture(const HANDLE& h, int hight, int width, int color) {
+    COORD picture{ 18,1 };
+    SetConsoleTextAttribute(h, color);
+    for (int i = 0; i < hight; i++) {
+        SetConsoleCursorPosition(h, picture);
+        for (int j = 0; j < width; j++) {
+            // 1 gallow
+            if (j == 0 || j == 1 || i == hight - 1 || i == 0 && j < 9)
+                cout << char(219);
+            // 2 kanat
+            else if (j == 8 && i < 2)
+                cout << "|";
+            // 3 head
+            else if (j == 8 && i == 2)
+                cout << char(2);
+            // 4 body
+            else if (j == 8 && i > 2 && i < 4)
+                cout << "|";
+            // 5 left arm
+            else if (j == 9 && i == 3)
+                cout << "\\";
+            // 6 right arm
+            else if (j == 7 && i == 3)
+                cout << "/";
+            // 7 left leg
+            else if (j == 9 && i == 4)
+                cout << "\\";
+            // 8 right leg
+            else if (j == 7 && i == 4)
+                cout << "/";
+            // 9 left leg
+            else if (j == 9 && i == 5)
+                cout << "|";
+            // 10 right leg
+            else if (j == 7 && i == 5)
+                cout << "|";
+            // 11 left foot
+            else if (j == 10 && i == 5)
+                cout << "_";
+            // 12 right foot
+            else if (j == 6 && i == 5)
+                cout << "_";
+            else
+                cout << " ";
+        }
+        picture.Y++;
+    }
 }

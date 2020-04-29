@@ -4,7 +4,7 @@
 #include<conio.h>
 using namespace std;
 
-enum class Colors { GREEN = 10, RED = 4, PINK = 13, LIGHT_RED = 12 };
+enum class Colors { GREEN = 10, RED = 4, PINK = 13, LIGHT_RED = 12, DARK_YELLOW = 6 };
 
 struct Word {
     int length;
@@ -31,3 +31,4 @@ void Check(const HANDLE& h, COORD& input, const Word& word, int latter_code, int
 void Effect(const HANDLE& h, COORD& input, int color, int color2, string str);
 void CheckForFinish(int latters_left);
 void MusikWin();
+void Picture(const HANDLE& h, int hight, int width, int color);
