@@ -1,21 +1,24 @@
-#include<iostream>
-#include<Windows.h>
-#include<ctime>
-#include<conio.h>
+// подключение нужных для работы библиотек
+#include<iostream> // для организации ввода вывода
+#include<Windows.h> // для структур HANDLE(взяти дискиптора(номера)окна консоли), HWND(взяти дискиптора(номера)окна консоли для мыши), COORD(Возможность упрвления координатами)
+#include<ctime> // для рандомных чисел, отсчёт времени от 1983 года (дата появления с++)
+#include<conio.h> // для функции _getch() (ввод с клавиатуры)
 using namespace std;
 
-enum class Colors { GREEN = 10, RED = 4, PINK = 13, LIGHT_RED = 12, DARK_YELLOW = 6 };
+// создание перечесления
+enum class Colors { GREEN = 10, RED = 4, PINK = 13, LIGHT_RED = 12, DARK_YELLOW = 6 }; 
 
+// создание структуры слово состоящего из длинны и массива символов
 struct Word {
     int length;
     char* str = new char[length];
 };
 
+// создание прототипов функций
 void Setings(const HANDLE& h, const HWND& hwnd);
 void MenuGreenText(const HANDLE& h, int x, int y, int color);
 void MenuEvent(HANDLE& h, Word& word, bool exit, int color, int color2);
-void MenuDarkGreenText(const HANDLE& h, string str, int x, int y, int color);
-int GameSetings();
+void MenuRedText(const HANDLE& h, string str, int x, int y, int color);
 int main();
 void Exit();
 void Loading(const HANDLE& h, int color);
