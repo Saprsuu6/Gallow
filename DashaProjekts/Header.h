@@ -14,7 +14,7 @@ struct Word {
     char* str = new char[length];
 };
 
-// создание прототипов функций
+// создание прототипов функций для тошо чтобы можно было обращаться к функции из любого места кода 
 void Setings(const HANDLE& h, const HWND& hwnd);
 void MenuGreenText(const HANDLE& h, int x, int y, int color);
 void MenuEvent(HANDLE& h, Word& word, bool exit, int color, int color2);
