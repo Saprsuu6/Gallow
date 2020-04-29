@@ -27,8 +27,16 @@ void GamePlay(const HANDLE& h, const Word& word, int enter, int color, int color
 int RandomLatter(const Word& word, int*& ar);
 int Input();
 void Check(const HANDLE& h, COORD& input, const Word& word, int latter_code, int& ind_of_latter, int*& ar,
-    int& latters_left);
+    int& latters_left, int& fail);
 void Effect(const HANDLE& h, COORD& input, int color, int color2, string str);
-void CheckForFinish(int latters_left);
+void CheckForFinish(const Word& word, int latters_left, int& fail);
 void MusikWin();
-void Picture(const HANDLE& h, int hight, int width, int color);
+void GallowPicture(const HANDLE& h, COORD& picture, int hight, int width);
+void Kanat_Body_RightLeg_LeftLegPicture(const HANDLE& h, COORD& picture, int x, int y);
+void HeadtPicture(const HANDLE& h, COORD& picture, int x, int y);
+void LeftArm_LegPicture(const HANDLE& h, COORD& picture, int x, int y);
+void RightArm_LegPicture(const HANDLE& h, COORD& picture, int x, int y);
+void Right_LeftFootPicture(const HANDLE& h, COORD& picture, int x, int y);
+void MusikGameOver();
+void GuessedAllLatters();
+void ForLoose();

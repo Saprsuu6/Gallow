@@ -14,7 +14,6 @@ int main() {
 	system("cls");
 	Frame(h, word, 10, 35);
 	GameplayPrint(h, word, 8);
-	Picture(h, 8, 16, int(Colors::DARK_YELLOW));
 	GamePlay(h, word, 13, int(Colors::RED), int(Colors::GREEN), int(Colors::PINK));
 	system("pause > NULL");
 }
