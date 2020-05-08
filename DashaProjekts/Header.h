@@ -14,6 +14,13 @@ struct Word {
     char* str = new char[length];
 };
 
+//struct WordsBase {
+//    static const int size = 20;
+//    const char* words[size] = { "Орешек\n","Молоко\n","Хлеб\n","Лук\n","Овошь\n","Сыр\n","Йогурт\n","Ссыки\n",
+//        "Голова\n","Файл\n","Яюлоко\n","Шаурма\n","Банан\n","Огурец\n","Заголовок\n","Точка\n","Дочка\n","Сын\n",
+//        "Планета\n","Карыто\n"};
+//};
+
 // создание прототипов функций для тошо чтобы можно было обращаться к функции из любого места кода 
 void Setings(const HANDLE& h, const HWND& hwnd);
 void MenuGreenText(const HANDLE& h, int x, int y, int color);
