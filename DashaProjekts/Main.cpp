@@ -8,6 +8,9 @@ int main() {
 	HANDLE h = GetStdHandle(-11);
 	Setings(h, hwnd);
 	Word word{ 12 }; // списковая инициализация(только превой переменной)
+	CreatePapka();
+	FillWordsTxt();
+	FillHintsTxt();
 	MenuGreenText(h, 0, 0, int(Colors::GREEN)); // явное преобразование в int т.к. Colors содержит целосленные КОНСТАНТЫ
 	MenuEvent(h, word, false, int(Colors::RED), int(Colors::GREEN));
 	system("cls"); // очистка экрана

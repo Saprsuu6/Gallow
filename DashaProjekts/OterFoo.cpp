@@ -95,8 +95,39 @@ void MenuEvent(HANDLE& h, Word& word, bool exit, int color, int color2) {
     }
 }
 
+void CreatePapka() {
+    _mkdir("Source");
+}
+
+void FillWordsTxt() {
+    FILE* file;
+    Words words;
+    fopen_s(&file, "Source\\Words.txt", "w");
+    for (int i = 0; i < words.length; i++)
+        fputs(words.str[i], file);
+}
+
+void FillHintsTxt() {
+    FILE* file;
+    Hints hints;
+    fopen_s(&file, "Source\\Hints.txt", "w");
+    for (int i = 0; i < hints.length; i++)
+        fputs(hints.str[i], file);
+}
+
 // word. доступ переменноый структуры через объект типа структуры
 void CreateWord(Word& word) { // ввод символов из 12 доступных
+    /*Words words;
+    FILE* file = {};
+    int str = 0;
+    char* temp = new char[50];
+    int random = rand() % words.length;
+    while (!feof(file)) {
+        if (str == random) 
+            fgets(temp, 49, file);
+        str++;
+    }
+    word.str = temp;*/
     cout << "Enter word or sentence from " << word.length - 1 << " latters(ENGLISH): ";
     cin.getline(word.str, word.length); // ввыод в маасив символов с максимальной размерностью автоматическое выставление \0 для обозначения конца строки
     CountLetters(word); // функция подсчёта символов слова кроме \0
@@ -224,11 +255,13 @@ int Input() {
 // функция проверки символов
 void Check(const HANDLE& h, COORD& input, const Word& word, int latter_code, int& ind_of_latter, int*& ar,
     int& latters_left, int& fail) {
-    if (latter_code == char(word.str[ind_of_latter])) { // если коды символов похожи
+    if (latter_code == int(word.str[ind_of_latter]) 
+        || latter_code + 32 == int(word.str[ind_of_latter])
+        || latter_code - 32 == int(word.str[ind_of_latter])) { // если коды символов похожи
         input.X = ind_of_latter + 1;
         input.Y = 1;
         SetConsoleCursorPosition(h, input);
-        cout << char(latter_code); // запись этого символа прямо на его месте
+        cout << word.str[ind_of_latter]; // запись этого символа прямо на его месте
         Effect(h, input, int(Colors::LIGHT_RED), int(Colors::GREEN), "RIGHT:)"); // функция создания эффекта
         ind_of_latter = RandomLatter(word, ar); // запуск выбора рандомного числа по которому находится символ в строке
         latters_left--; // уменьшение оставшихся букв

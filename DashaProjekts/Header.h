@@ -3,6 +3,7 @@
 #include<Windows.h> // для структур HANDLE(взяти дискиптора(номера)окна консоли), HWND(взяти дискиптора(номера)окна консоли для мыши), COORD(Возможность упрвления координатами)
 #include<ctime> // для рандомных чисел, отсчёт времени от 1983 года (дата появления с++)
 #include<conio.h> // для функции _getch() (ввод с клавиатуры)
+#include <direct.h>
 using namespace std;
 
 // создание перечесления
@@ -13,6 +14,20 @@ struct Word {
     int length;
     char* str = new char[length];
 };
+
+struct Words {
+    static const int length = 10;
+    const char* str[length] = { "Minecraft\n","Orangen\n","Blue\n","Water\n","Rock and roll\n",
+        "Money\n","Bread\n","Vodka\n","Bear\n","Milk\n" };
+};
+
+struct Hints {
+    static const int length = 10;
+    const char* str[length] = { "This is a game of our childhood\n","Color of tropcis fruit\n","99% color on Earth\n",
+        "We couldn't live without it\n","It's genre of music\n","We use it every day\n","Sometime we have eat it or always\n",
+        "This thing gelp us from radiation\n","Alcoholic light drink\n","It's have more calcium\n" };
+};
+
 
 //struct WordsBase {
 //    static const int size = 20;
@@ -50,3 +65,6 @@ void Right_LeftFootPicture(const HANDLE& h, COORD& picture, int x, int y);
 void MusikGameOver();
 void GuessedAllLatters();
 void ForLoose();
+void CreatePapka();
+void FillWordsTxt();
+void FillHintsTxt();
