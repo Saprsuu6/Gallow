@@ -118,16 +118,20 @@ void FillHintsTxt() {
 // word. доступ переменноый структуры через объект типа структуры
 void CreateWord(Word& word) { // ввод символов из 12 доступных
     /*Words words;
-    FILE* file = {};
+    FILE* file;
     int str = 0;
-    char* temp = new char[50];
+    char* temp = new char[100];
     int random = rand() % words.length;
+    fopen_s(&file, "Source\\Words.txt", "r");
     while (!feof(file)) {
         if (str == random) 
-            fgets(temp, 49, file);
+            fgets(temp, 99, file);
         str++;
     }
-    word.str = temp;*/
+    fclose(file);
+    word.str = temp;
+    cout << word.str;
+    Sleep(INFINITE);*/
     cout << "Enter word or sentence from " << word.length - 1 << " latters(ENGLISH): ";
     cin.getline(word.str, word.length); // ввыод в маасив символов с максимальной размерностью автоматическое выставление \0 для обозначения конца строки
     CountLetters(word); // функция подсчёта символов слова кроме \0
