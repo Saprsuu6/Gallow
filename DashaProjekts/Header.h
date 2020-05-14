@@ -3,38 +3,17 @@
 #include<Windows.h> // для структур HANDLE(взяти дискиптора(номера)окна консоли), HWND(взяти дискиптора(номера)окна консоли для мыши), COORD(Возможность упрвления координатами)
 #include<ctime> // для рандомных чисел, отсчёт времени от 1983 года (дата появления с++)
 #include<conio.h> // для функции _getch() (ввод с клавиатуры)
-#include <direct.h>
+#include<direct.h>
 using namespace std;
 
 // создание перечесления
-enum class Colors { GREEN = 10, RED = 4, PINK = 13, LIGHT_RED = 12, DARK_YELLOW = 6 }; 
+enum class Colors { GREEN = 10, RED = 4, PINK = 13, LIGHT_RED = 12, DARK_YELLOW = 6 };
 
 // создание структуры слово состоящего из длинны и массива символов
 struct Word {
     int length;
     char* str = new char[length];
 };
-
-struct Words {
-    static const int length = 10;
-    const char* str[length] = { "Minecraft\n","Orangen\n","Blue\n","Water\n","Rock and roll\n",
-        "Money\n","Bread\n","Vodka\n","Bear\n","Milk\n" };
-};
-
-struct Hints {
-    static const int length = 10;
-    const char* str[length] = { "This is a game of our childhood\n","Color of tropcis fruit\n","99% color on Earth\n",
-        "We couldn't live without it\n","It's genre of music\n","We use it every day\n","Sometime we have eat it or always\n",
-        "This thing gelp us from radiation\n","Alcoholic light drink\n","It's have more calcium\n" };
-};
-
-
-//struct WordsBase {
-//    static const int size = 20;
-//    const char* words[size] = { "Орешек\n","Молоко\n","Хлеб\n","Лук\n","Овошь\n","Сыр\n","Йогурт\n","Ссыки\n",
-//        "Голова\n","Файл\n","Яюлоко\n","Шаурма\n","Банан\n","Огурец\n","Заголовок\n","Точка\n","Дочка\n","Сын\n",
-//        "Планета\n","Карыто\n"};
-//};
 
 // создание прототипов функций для тошо чтобы можно было обращаться к функции из любого места кода 
 void Setings(const HANDLE& h, const HWND& hwnd);

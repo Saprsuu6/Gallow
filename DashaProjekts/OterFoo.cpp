@@ -83,7 +83,7 @@ void MenuEvent(HANDLE& h, Word& word, bool exit, int color, int color2) {
                 MenuRedText(h, "Start game.", 0, 0, color); // функция показа крассным цветом при наведении
             else if (mouse.X >= 0 && mouse.X <= 5 && mouse.Y == 1)
                 MenuRedText(h, "Exit.", 0, 1, color); // функция показа крассным цветом при наведении
-            if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED && 
+            if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED &&
                 mouse.X >= 0 && mouse.X <= 5 && mouse.Y == 1) // если была нажата ПРАВАЯ(1ST) кнопка мыши
                 Exit(); // функция выхода                                                                                   
             else if (all_events[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED &&
@@ -95,43 +95,8 @@ void MenuEvent(HANDLE& h, Word& word, bool exit, int color, int color2) {
     }
 }
 
-void CreatePapka() {
-    _mkdir("Source");
-}
-
-void FillWordsTxt() {
-    FILE* file;
-    Words words;
-    fopen_s(&file, "Source\\Words.txt", "w");
-    for (int i = 0; i < words.length; i++)
-        fputs(words.str[i], file);
-}
-
-void FillHintsTxt() {
-    FILE* file;
-    Hints hints;
-    fopen_s(&file, "Source\\Hints.txt", "w");
-    for (int i = 0; i < hints.length; i++)
-        fputs(hints.str[i], file);
-}
-
 // word. доступ переменноый структуры через объект типа структуры
 void CreateWord(Word& word) { // ввод символов из 12 доступных
-    /*Words words;
-    FILE* file;
-    int str = 0;
-    char* temp = new char[100];
-    int random = rand() % words.length;
-    fopen_s(&file, "Source\\Words.txt", "r");
-    while (!feof(file)) {
-        if (str == random) 
-            fgets(temp, 99, file);
-        str++;
-    }
-    fclose(file);
-    word.str = temp;
-    cout << word.str;
-    Sleep(INFINITE);*/
     cout << "Enter word or sentence from " << word.length - 1 << " latters(ENGLISH): ";
     cin.getline(word.str, word.length); // ввыод в маасив символов с максимальной размерностью автоматическое выставление \0 для обозначения конца строки
     CountLetters(word); // функция подсчёта символов слова кроме \0
@@ -148,7 +113,7 @@ void CountLetters(Word& word) {
 }
 
 // создание рамки для игры
-void Frame(const HANDLE& h, const Word& word, int hight, int width) { 
+void Frame(const HANDLE& h, const Word& word, int hight, int width) {
     for (int i = 0; i < hight; i++) {
         for (int j = 0; j < width; j++) {
             if (i == 0 && j == 0)
@@ -181,7 +146,7 @@ void GameplayPrint(const HANDLE& h, const Word& word, int width) {
     COORD c{ 1,3 };
     SetConsoleCursorPosition(h, c);
     cout << "Enter latter:" << char(26) << " " << char(27); // между стрелочек будет писаться буква
-    c.Y+=5; // увеличение координаты у на 5
+    c.Y += 5; // увеличение координаты у на 5
     for (int i = 0; i < width; i++) {
         SetConsoleCursorPosition(h, c);
         SetConsoleTextAttribute(h, rand() % 14 + 1);
@@ -222,7 +187,7 @@ void GamePlay(const HANDLE& h, const Word& word, int enter, int color, int color
             if (latter_code != 9) // показ всех сиволов кроме символа по коду клавиши TAB
                 cout << char(latter_code); // показ по координатам (15,3)
             if (exit_from_cycle == 13) // выход из цикла если пременная выход равна 13
-                break; 
+                break;
             input.Y++;
             input.X -= 14;
             SetConsoleCursorPosition(h, input);
@@ -235,18 +200,18 @@ void GamePlay(const HANDLE& h, const Word& word, int enter, int color, int color
 }
 
 // функция для взятия рандомной буквы
-int RandomLatter(const Word& word, int*& ar) {  
+int RandomLatter(const Word& word, int*& ar) {
     int value = rand() % word.length; // запись в переменную рандомного числа в диапазоне от 0 до количества симолов - 1 включительно 
-    for (int i = 0; i < word.length; i++) {     
+    for (int i = 0; i < word.length; i++) {
         if (ar[i] == value) { // если по такомуто индексу найдено токоеже число                   
             while (value == ar[i]) // запуск массива пока не изменится число              
-                value = rand() % word.length;   
+                value = rand() % word.length;
             i = 0; // обнуление счётчика чтобы не повторялось значение в любом индексе массива                             
-        }                                       
-    }                                           
+        }
+    }
     ar[value] = value; // запись значения в массив по ткомуто индексу                     
     return value; // возврат значения и запись в пременную ind_of_latter                             
-}                                               
+}
 
 // функция ввода символа из клавиатуры
 int Input() {
@@ -259,7 +224,7 @@ int Input() {
 // функция проверки символов
 void Check(const HANDLE& h, COORD& input, const Word& word, int latter_code, int& ind_of_latter, int*& ar,
     int& latters_left, int& fail) {
-    if (latter_code == int(word.str[ind_of_latter]) 
+    if (latter_code == int(word.str[ind_of_latter])
         || latter_code + 32 == int(word.str[ind_of_latter])
         || latter_code - 32 == int(word.str[ind_of_latter])) { // если коды символов похожи
         input.X = ind_of_latter + 1;
@@ -680,7 +645,7 @@ void GuessedAllLatters() {
 
 // функция для пищалки
 void MusikGameOver() { // превое число обозначает https://studfile.net/preview/600434/page:10/ второе чило обозначает частоту звучания чем выше тем звонце, чем ниже тем басистее
-    Beep(587, 500); 
+    Beep(587, 500);
     Beep(523, 500);
     Beep(494, 500);
     for (int i = 0; i < 5; i++)
